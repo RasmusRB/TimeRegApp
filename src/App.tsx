@@ -25,6 +25,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
+// Add routing and components
 const App: React.FC = () => {
   return (
     <IonApp>

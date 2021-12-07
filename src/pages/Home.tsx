@@ -21,21 +21,25 @@ const Home: React.FC = () => {
 
   let history = useHistory();
 
+  // React hooks to define user log in and possible errors in input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Regex to validate email
   const validateEmail = (email: any) => {
     const regulars =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regulars.test(String(email).toLowerCase());
   };
 
+  // log in post function => using axios library for http requests
   const handleLogin = async () => {
     let formdata = new FormData();
     formdata.append("email", email);
     formdata.append("password", password);
 
+    // validation checks (email + password length)
     if (!validateEmail(email)) {
       setError("Invalid email!");
     } else if (password.length < 8) {
@@ -64,6 +68,7 @@ const Home: React.FC = () => {
     }
   };
 
+  // using navigation history to navigate 
   const handleNavigate = () => {
     history.push("/SignUp");
   };

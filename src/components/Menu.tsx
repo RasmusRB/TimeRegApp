@@ -25,6 +25,7 @@ import {
 import "./Menu.css";
 import { getUser, removeUserSession } from "../utils/Common";
 
+// Define links in menu
 interface AppPage {
   url: string;
   iosIcon: string;
@@ -60,11 +61,13 @@ const appPages: AppPage[] = [
 ];
 
 const Menu: React.FC = () => {
+  // use router history
   let history = useHistory();
 
   const location = useLocation();
   const user = getUser();
 
+  // logs the user out by removing his session => see ./utils/Common.tsx
   const logout = () => {
     removeUserSession();
     history.push("/");
