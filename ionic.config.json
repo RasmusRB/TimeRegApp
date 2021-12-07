@@ -1,0 +1,7 @@
+{
+  "name": "TimeApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
