@@ -21,6 +21,14 @@ import {
   mailSharp,
   paperPlaneOutline,
   paperPlaneSharp,
+  //
+  timeOutline,
+  timeSharp,
+  calendarOutline,
+  calendarClearSharp,
+  calendarSharp,
+  personOutline,
+  personSharp,
 } from "ionicons/icons";
 import "./Menu.css";
 import { getUser, removeUserSession } from "../utils/Common";
@@ -35,29 +43,33 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: "Inbox",
-    url: "/page/Inbox",
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    title: "Time Registration",
+    url: "/page/TimeRegistration",
+    iosIcon: timeOutline,
+    mdIcon: timeSharp,
   },
   {
-    title: "Outbox",
-    url: "/page/Outbox",
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp,
+    title: "Calender",
+    url: "/page/Calender",
+    iosIcon: calendarOutline,
+    mdIcon: calendarSharp,
   },
   {
-    title: "Favorites",
-    url: "/page/Favorites",
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
+    title: "Profile",
+    url: "/page/Profile",
+    iosIcon: personOutline,
+    mdIcon: personSharp,
   },
+  
+  /*
   {
     title: "Archived",
     url: "/page/Archived",
     iosIcon: archiveOutline,
     mdIcon: archiveSharp,
   },
+
+  */
 ];
 
 const Menu: React.FC = () => {
