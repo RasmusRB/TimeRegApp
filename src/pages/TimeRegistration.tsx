@@ -19,7 +19,12 @@ import {
 const TimeRegistration: React.FC = () => {
 
 
-var today = new Date();
+  function showDate(){
+    var today = new Date();
+    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+    //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    return date;
+  }
 
 
   return (
@@ -29,10 +34,7 @@ var today = new Date();
             <IonMenuButton />
           <IonTitle style={{ textAlign: "center" }}>Time Registration</IonTitle>
           
-        {
-          today.getUTCDate
-        }
-          
+          <p style={{ textAlign: "center" }}> {showDate()} </p>
           
         </IonToolbar>
       </IonHeader>
