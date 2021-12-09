@@ -44,19 +44,19 @@ interface AppPage {
 const appPages: AppPage[] = [
   {
     title: "Time Registration",
-    url: "/page/TimeRegistration",
+    url: "/TimeRegistration",
     iosIcon: timeOutline,
     mdIcon: timeSharp,
   },
   {
-    title: "Calender",
-    url: "/page/Calender",
+    title: "Calendar",
+    url: "/Calendar",
     iosIcon: calendarOutline,
     mdIcon: calendarSharp,
   },
   {
     title: "Profile",
-    url: "/page/Profile",
+    url: "/Profile",
     iosIcon: personOutline,
     mdIcon: personSharp,
   },

@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Front from "./pages/Front";
 import TimeRegistration from "./pages/TimeRegistration";
+import Calender from "./pages/Calendar";
+import Profile from "./pages/Profile";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -25,6 +27,7 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import Calendar from "./pages/Calendar";
 
 // Add routing and components
 const App: React.FC = () => {
@@ -45,6 +48,12 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/TimeRegistration">
               <TimeRegistration />
+            </Route>
+            <Route exact path="/Calendar">
+              <Calendar />
+            </Route>
+            <Route exact path="/Profile">
+              <Profile />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

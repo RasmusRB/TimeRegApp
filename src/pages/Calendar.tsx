@@ -14,28 +14,13 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-
-
-const TimeRegistration: React.FC = () => {
-
-
-  function showDate(){
-    var today = new Date();
-    var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-    //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    return date;
-  }
-
-
+const Calendar: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
             <IonMenuButton />
-          <IonTitle style={{ textAlign: "center" }}>Time Registration</IonTitle>
-          
-          <p style={{ textAlign: "center" }}> {showDate()} </p>
-          
+          <IonTitle style={{ textAlign: "center" }}>Calendar</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen >
@@ -52,14 +37,9 @@ const TimeRegistration: React.FC = () => {
         >
           Log in
         </IonButton>
-
-
-
-
-
       </IonContent>
     </IonPage>
   );
 };
 
-export default TimeRegistration;
+export default Calendar;
