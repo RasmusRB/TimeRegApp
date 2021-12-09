@@ -5,6 +5,7 @@ import Menu from "./components/Menu";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Front from "./pages/Front";
+import TimeRegistration from "./pages/TimeRegistration";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -41,6 +42,9 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/Front">
               <Front />
+            </Route>
+            <Route exact path="/TimeRegistration">
+              <TimeRegistration />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>
