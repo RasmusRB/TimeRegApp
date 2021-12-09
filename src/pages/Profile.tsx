@@ -14,26 +14,13 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-
-
-const TimeRegistration: React.FC = () => {
-
-
-var today = new Date();
-
-
+const Profile: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
             <IonMenuButton />
-          <IonTitle style={{ textAlign: "center" }}>Time Registration</IonTitle>
-          
-        {
-          today.getUTCDate
-        }
-          
-          
+          <IonTitle style={{ textAlign: "center" }}>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen >
@@ -50,14 +37,9 @@ var today = new Date();
         >
           Log in
         </IonButton>
-
-
-
-
-
       </IonContent>
     </IonPage>
   );
 };
 
-export default TimeRegistration;
+export default Profile;
