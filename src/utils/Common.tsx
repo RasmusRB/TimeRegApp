@@ -7,7 +7,7 @@ export const getUser = () => {
   
   // Returns token from session storage
   export const getToken = () => {
-    return sessionStorage.getItem("token") || null;
+    return sessionStorage.getItem("token");
   };
   
   // Sets token and user to session storage

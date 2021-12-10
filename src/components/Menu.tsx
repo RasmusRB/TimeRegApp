@@ -31,7 +31,9 @@ import {
   personSharp,
 } from "ionicons/icons";
 import "./Menu.css";
-import { getUser, removeUserSession } from "../utils/Common";
+import { getUser, removeUserSession, getToken } from "../utils/Common";
+import decode from 'jwt-decode';
+import jwtDecode, { JwtPayload } from "jwt-decode";
 
 // Define links in menu
 interface AppPage {
@@ -78,6 +80,12 @@ const Menu: React.FC = () => {
 
   const location = useLocation();
   const user = getUser();
+  
+  // const decode = () => {
+  //   const token = getToken();
+  //   const decoded = jwtDecode(token)
+  //   console.log(decoded)
+  // }
 
   // logs the user out by removing his session => see ./utils/Common.tsx
   const logout = () => {
@@ -85,12 +93,19 @@ const Menu: React.FC = () => {
     history.push("/");
   };
 
+  const decodeJwt = () => {
+    const token = sessionStorage.getItem("token");
+    const deocoded = jwtDecode<JwtPayload>(token || '') || null;
+    console.log('asd => ' + deocoded)
+  }
+  
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
           <IonListHeader>Inbox</IonListHeader>
           <IonNote>{user}</IonNote>
+      {decodeJwt}
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
