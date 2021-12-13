@@ -13,8 +13,26 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { getUser, removeUserSession } from "../utils/Common";
+import axios from "axios";
+import { IUser } from "../interfaces/IUser";
 
 const Profile: React.FC = () => {
+
+  const [userData, setUserData] = useState<IUser>();
+
+  const user = getUser()
+
+  useEffect(() => {
+    axios.get<IUser>(`http://localhost:5014/user/getuser?email=${user}`)
+    .then(res => {
+      setUserData(res.data)
+      console.log(res.data)
+    }).catch((error) => {
+      alert(error.message)
+    })    
+  }, [])
+
   return (
     <IonPage>
       <IonHeader>
@@ -23,20 +41,21 @@ const Profile: React.FC = () => {
           <IonTitle style={{ textAlign: "center" }}>Profile</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen >
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonButton
-          expand="block"
-          fill="solid"
-          color="danger"
-          style={{ margin: "50px" }}
-        >
-          Log in
-        </IonButton>
+      <IonContent fullscreen >       
+      
+      <IonInput placeholder={userData?.firstname} style={{ textAlign: "center" }} />
+      <IonInput placeholder={userData?.lastname} style={{ textAlign: "center" }} />
+      <IonInput placeholder={userData?.email} style={{ textAlign: "center" }} />
+      <IonInput placeholder={userData?.telephone} style={{ textAlign: "center" }} />
+
+      <div style={{ textAlign: "center", justifyContent: "center", display: "grid", alignContent: "center" }}>
+        <IonButton>Update</IonButton>
+      </div>
+
+      {
+        console.log(userData?.firstname)
+      }
+
       </IonContent>
     </IonPage>
   );

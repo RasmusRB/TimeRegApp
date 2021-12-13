@@ -35,6 +35,7 @@ const Calendar: React.FC = () => {
           color="danger"
           style={{ margin: "50px" }}
         >
+          <IonInput type="datetime-local"/>
           Log in
         </IonButton>
       </IonContent>
