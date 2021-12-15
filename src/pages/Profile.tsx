@@ -1,19 +1,15 @@
-import { useHistory } from "react-router";
 import React, { useState, useEffect } from "react";
 import {
   IonButton,
   IonContent,
   IonHeader,
   IonInput,
-  IonLabel,
   IonMenuButton,
-  IonMenuToggle,
   IonPage,
-  IonRippleEffect,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { getUser, removeUserSession } from "../utils/Common";
+import { getUser } from "../utils/Common";
 import axios from "axios";
 import { IUser } from "../interfaces/IUser";
 

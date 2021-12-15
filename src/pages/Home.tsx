@@ -16,8 +16,7 @@ import axios from "axios";
 import { getUser, setUserSession } from "../utils/Common";
 
 const Home: React.FC = () => {
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   let history = useHistory();
 
@@ -61,56 +60,39 @@ const Home: React.FC = () => {
           history.push("/Front");
         })
         .catch((error) => {
-            if (error.response.status === 400) {
-                error = setError("Wrong username or password.");
-              } else error = setError("Something went wrong, try again later.");
+          if (error.response.status === 400) {
+            error = setError("Wrong username or password.");
+          } else error = setError("Something went wrong, try again later.");
         });
     }
   };
 
-  // using navigation history to navigate 
+  // using navigation history to navigate
   const handleNavigate = () => {
     history.push("/SignUp");
   };
 
   return (
     <IonPage className="bgContent">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle style={{ textAlign: "center" }}>TimeRegApp</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle style={{ textAlign: "center" }}>TimeRegApp</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <form>
-          <div
-            style={{
-              justifyContent: "center",
-              alignContent: "center",
-              textAlign: "center",
-              margin: "25px",
-            }}
-          >
-            <IonLabel>Email</IonLabel>
+        <div className="center-container">
+          <form>
+            <IonLabel className="lbl-form">Email</IonLabel>
             <IonInput
+              clearInput={true}
+              className="input-form"
               type="text"
               onIonChange={(e: any) => setEmail(e.target.value)}
             />
-          </div>
-          <div
-            style={{
-              justifyContent: "center",
-              alignContent: "center",
-              textAlign: "center",
-              margin: "25px",
-            }}
-          >
-            <IonLabel>Password</IonLabel>
+
+            <IonLabel className="lbl-form">Password</IonLabel>
             <IonInput
+              className="input-form"
               type="password"
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
@@ -131,30 +113,26 @@ const Home: React.FC = () => {
                 </IonLabel>
               </>
             )}
-          </div>
-        </form>
-        <IonButton
-          expand="block"
-          fill="solid"
-          color="danger"
-          style={{ margin: "50px" }}
-          onClick={handleLogin}
-        >
-          Log in
-        </IonButton>
-        <IonButton
-          expand="block"
-          color="success"
-          style={{ margin: "50px" }}
-          onClick={handleNavigate}
-        >
-          Sign up
-        </IonButton>
-        <div style={{ textAlign: "center", margin: "60px" }}>
-          <p>
-            <Link to="/Forgotten">Forgotten password?</Link>
-            <IonRippleEffect></IonRippleEffect>
-          </p>
+            <IonButton
+              expand="block"
+              fill="solid"
+              onClick={handleLogin}
+            >
+              Log in
+            </IonButton>
+            <IonButton
+              expand="block"
+              onClick={handleNavigate}
+            >
+              Sign up
+            </IonButton>
+            <div style={{ textAlign: "center", margin: "50px", fontFamily: "monospace" }}>
+              <p>
+                <Link to="/Forgotten">Forgotten password?</Link>
+                <IonRippleEffect></IonRippleEffect>
+              </p>
+            </div>
+          </form>
         </div>
       </IonContent>
     </IonPage>

@@ -13,37 +13,30 @@ import {
 
 import { useHistory, useLocation } from "react-router-dom";
 import {
-  archiveOutline,
-  archiveSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  //
+  // archiveOutline,
+  // archiveSharp,
+  // heartOutline,
+  // heartSharp,
+  // mailOutline,
+  // mailSharp,
+  // paperPlaneOutline,
+  // paperPlaneSharp,
   timeOutline,
   timeSharp,
   calendarOutline,
-  calendarClearSharp,
+  // calendarClearSharp,
   calendarSharp,
   personOutline,
   personSharp,
 } from "ionicons/icons";
 import "./Menu.css";
-import { getUser, removeUserSession, getToken } from "../utils/Common";
-import decode from 'jwt-decode';
+import { getToken, getUser, removeUserSession } from "../utils/Common";
 import jwtDecode, { JwtPayload } from "jwt-decode";
+import { IAppPages } from "../interfaces/IAppPages";
+import { IToken } from "../interfaces/IToken";
 
 // Define links in menu
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-}
-
-const appPages: AppPage[] = [
+const AdminAppPages: IAppPages[] = [
   {
     title: "Time Registration",
     url: "/TimeRegistration",
@@ -62,16 +55,33 @@ const appPages: AppPage[] = [
     iosIcon: personOutline,
     mdIcon: personSharp,
   },
-  
-  /*
   {
-    title: "Archived",
-    url: "/page/Archived",
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp,
+    title: "Users",
+    url: "/Users",
+    iosIcon: personOutline,
+    mdIcon: personSharp,
   },
+];
 
-  */
+const UserAppPages: IAppPages[] = [
+  {
+    title: "Time Registration",
+    url: "/TimeRegistration",
+    iosIcon: timeOutline,
+    mdIcon: timeSharp,
+  },
+  {
+    title: "Calendar",
+    url: "/Calendar",
+    iosIcon: calendarOutline,
+    mdIcon: calendarSharp,
+  },
+  {
+    title: "Profile",
+    url: "/Profile",
+    iosIcon: personOutline,
+    mdIcon: personSharp,
+  },
 ];
 
 const Menu: React.FC = () => {
@@ -80,12 +90,6 @@ const Menu: React.FC = () => {
 
   const location = useLocation();
   const user = getUser();
-  
-  // const decode = () => {
-  //   const token = getToken();
-  //   const decoded = jwtDecode(token)
-  //   console.log(decoded)
-  // }
 
   // logs the user out by removing his session => see ./utils/Common.tsx
   const logout = () => {
@@ -93,41 +97,54 @@ const Menu: React.FC = () => {
     history.push("/");
   };
 
-  const decodeJwt = () => {
-    const token = sessionStorage.getItem("token");
-    const deocoded = jwtDecode<JwtPayload>(token || '') || null;
-    console.log('asd => ' + deocoded)
-  }
-  
+  let token = getToken();
+  let admin = jwtDecode<IToken>(token || "");
+
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
           <IonListHeader>Inbox</IonListHeader>
           <IonNote>{user}</IonNote>
-      {decodeJwt}
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem
-                  className={
-                    location.pathname === appPage.url ? "selected" : ""
-                  }
-                  routerLink={appPage.url}
-                  routerDirection="none"
-                  lines="none"
-                  detail={false}
-                >
-                  <IonIcon
-                    slot="start"
-                    ios={appPage.iosIcon}
-                    md={appPage.mdIcon}
-                  />
-                  <IonLabel>{appPage.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
+          {admin.admin
+            ? AdminAppPages.map((appPage, index) => {
+                return (
+                  <IonMenuToggle key={index} autoHide={false}>
+                    <IonItem
+                      className={
+                        location.pathname === appPage.url ? "selected" : ""
+                      }
+                      routerLink={appPage.url}
+                      routerDirection="none"
+                      lines="none"
+                      detail={false}
+                    >
+                      <IonIcon
+                        slot="start"
+                        ios={appPage.iosIcon}
+                        md={appPage.mdIcon}
+                      />
+                      <IonLabel>{appPage.title}</IonLabel>
+                    </IonItem>
+                  </IonMenuToggle>
+                );
+              })
+            : UserAppPages.map((ap, i) => {
+                return (
+                  <IonMenuToggle key={i} autoHide={false}>
+                    <IonItem
+                      className={location.pathname === ap.url ? "selected" : ""}
+                      routerLink={ap.url}
+                      routerDirection="none"
+                      lines="none"
+                      detail={false}
+                    >
+                      <IonIcon slot="start" ios={ap.iosIcon} md={ap.mdIcon} />
+                      <IonLabel>{ap.title}</IonLabel>
+                    </IonItem>
+                  </IonMenuToggle>
+                );
+              })}
         </IonList>
         <IonButton expand="block" fill="solid" onClick={logout}>
           Logout

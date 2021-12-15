@@ -1,7 +1,6 @@
 import { IonApp, IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route } from "react-router-dom";
-import Menu from "./components/Menu";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Front from "./pages/Front";
@@ -28,6 +27,9 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import Calendar from "./pages/Calendar";
+import Forgotten from "./pages/Forgotten";
+import Users from "./pages/Users";
+import PrivateRoute from "./utils/PrivateRoute";
 
 // Add routing and components
 const App: React.FC = () => {
@@ -35,26 +37,29 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Menu />
           <IonRouterOutlet id="main">
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/SignUp">
+            <Route path="/SignUp">
               <SignUp />
             </Route>
-            <Route exact path="/Front">
+            <Route path="/Front">
               <Front />
             </Route>
-            <Route exact path="/TimeRegistration">
+            <Route path="/TimeRegistration">
               <TimeRegistration />
             </Route>
-            <Route exact path="/Calendar">
+            <Route path="/Calendar">
               <Calendar />
             </Route>
-            <Route exact path="/Profile">
+            <Route path="/Profile">
               <Profile />
             </Route>
+            <Route path="/Forgotten">
+              <Forgotten />
+            </Route>
+            <PrivateRoute path="/Users" component={Users} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

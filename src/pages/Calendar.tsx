@@ -17,16 +17,10 @@ import {
 const Calendar: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-            <IonMenuButton />
-          <IonTitle style={{ textAlign: "center" }}>Calendar</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen >
+      <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle style={{ textAlign: "center" }}>Calendar</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonButton
@@ -35,7 +29,7 @@ const Calendar: React.FC = () => {
           color="danger"
           style={{ margin: "50px" }}
         >
-          <IonInput type="datetime-local"/>
+          <IonInput type="datetime-local" />
           Log in
         </IonButton>
       </IonContent>

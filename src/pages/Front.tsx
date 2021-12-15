@@ -17,18 +17,14 @@ import {
 const Front: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle style={{ textAlign: "center" }}><IonMenuButton/>TimeRegApp</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen id="main">
-          
-      <IonButton slot="start">
-         </IonButton>
+        <IonButton slot="start"></IonButton>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
+            <IonTitle style={{ textAlign: "center" }}>
+              <IonMenuButton />
+              TimeRegApp
+            </IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonButton
