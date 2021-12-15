@@ -44,18 +44,20 @@ const Home: React.FC = () => {
     } else if (password.length < 8) {
       setError("Password must be at least 8 characters!");
     } else {
-      await axios({
-        method: "post",
-        url: "http://localhost:5014/user/login",
-        headers: {
+      try {
+
+        await axios({
+          method: "post",
+          url: "http://localhost:5014/user/login",
+          headers: {
           Accept: "*/*",
           "Content-Type": "multipart/form-data",
         },
         data: formdata,
       })
-        .then((res) => {
-          setUserSession(res.data, email);
-          const user = getUser();
+      .then((res) => {
+        setUserSession(res.data, email);
+        const user = getUser();
           alert("Welcome " + user);
           history.push("/Front");
         })
@@ -64,6 +66,10 @@ const Home: React.FC = () => {
             error = setError("Wrong username or password.");
           } else error = setError("Something went wrong, try again later.");
         });
+      } catch (Exception )
+      {
+        alert("Something bad happened! ");
+      }
     }
   };
 
