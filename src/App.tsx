@@ -30,6 +30,7 @@ import Calendar from "./pages/Calendar";
 import Forgotten from "./pages/Forgotten";
 import Users from "./pages/Users";
 import PrivateRoute from "./utils/PrivateRoute";
+import Menu from "./components/Menu";
 
 // Add routing and components
 const App: React.FC = () => {
@@ -37,6 +38,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
+          <Menu />
           <IonRouterOutlet id="main">
             <Route exact path="/">
               <Home />

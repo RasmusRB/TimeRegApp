@@ -2,10 +2,12 @@ import { useHistory } from "react-router";
 import React from "react";
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonInput,
   IonLabel,
+  IonMenuButton,
   IonPage,
   IonRippleEffect,
   IonTitle,
@@ -13,21 +15,20 @@ import {
 } from "@ionic/react";
 
 const Users: React.FC = () => {
-
-
-
-    return (
-<IonPage className="bgContent">
+  return (
+    <IonPage className="bgContent">
       <IonContent fullscreen>
         <IonHeader>
           <IonToolbar>
-            <IonTitle style={{ textAlign: "center" }}>Users</IonTitle>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle slot="end">Users</IonTitle>
           </IonToolbar>
         </IonHeader>
-      
       </IonContent>
     </IonPage>
-    )
-}
+  );
+};
 
 export default Users;

@@ -101,7 +101,13 @@ const Home: React.FC = () => {
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
             <br />
-            <div style={{justifyContent: "center", alignContent: "center", display: "grid"}}>
+            <div
+              style={{
+                justifyContent: "center",
+                alignContent: "center",
+                display: "grid",
+              }}
+            >
               {error && (
                 <>
                   <IonLabel

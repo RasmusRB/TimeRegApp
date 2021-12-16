@@ -31,9 +31,8 @@ import {
 } from "ionicons/icons";
 import "./Menu.css";
 import { getToken, getUser, removeUserSession } from "../utils/Common";
-import jwtDecode, { JwtPayload } from "jwt-decode";
 import { IAppPages } from "../interfaces/IAppPages";
-import { IToken } from "../interfaces/IToken";
+import { useState, useEffect } from "react";
 
 // Define links in menu
 const AdminAppPages: IAppPages[] = [
@@ -90,6 +89,7 @@ const Menu: React.FC = () => {
 
   const location = useLocation();
   const user = getUser();
+  const [admin, setAdmin] = useState();
 
   // logs the user out by removing his session => see ./utils/Common.tsx
   const logout = () => {
@@ -97,17 +97,26 @@ const Menu: React.FC = () => {
     history.push("/");
   };
 
-  let token = getToken();
-  let admin = jwtDecode<IToken>(token || "");
+  useEffect(() => {
+    try {
+      let token = getToken() || '';
+      let decoded = JSON.parse(atob(token.split(".")[1]));
+      setAdmin(decoded.admin)
+    } catch (e) {
+      return;
+    }
+  }, [])
 
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
+          <IonListHeader>TimeRegApp</IonListHeader>
           <IonNote>{user}</IonNote>
-          {admin.admin
-            ? AdminAppPages.map((appPage, index) => {
+          { 
+            admin === true
+            ?
+            AdminAppPages.map((appPage, index) => {
                 return (
                   <IonMenuToggle key={index} autoHide={false}>
                     <IonItem
@@ -144,7 +153,8 @@ const Menu: React.FC = () => {
                     </IonItem>
                   </IonMenuToggle>
                 );
-              })}
+            })
+          }
         </IonList>
         <IonButton expand="block" fill="solid" onClick={logout}>
           Logout

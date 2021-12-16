@@ -1,6 +1,7 @@
 import React from "react";
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonInput,
@@ -29,13 +30,14 @@ const TimeRegistration: React.FC = () => {
       <IonContent fullscreen>
         <IonHeader>
           <IonToolbar>
-            <IonTitle style={{ textAlign: "center" }}>
-              Time Registration
-            </IonTitle>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle slot="end">Time Registration</IonTitle>
           </IonToolbar>
         </IonHeader>
 
-        <IonHeader style={{ textAlign: "center" }}>{showDate()}</IonHeader>
+        {/* <IonHeader style={{ textAlign: "right" }}>{showDate()}</IonHeader> */}
         <form>
           <IonInput
             placeholder="Start time"

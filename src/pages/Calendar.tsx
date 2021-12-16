@@ -2,6 +2,7 @@ import { useHistory } from "react-router";
 import React, { useState, useEffect } from "react";
 import {
   IonButton,
+  IonButtons,
   IonContent,
   IonHeader,
   IonInput,
@@ -18,9 +19,12 @@ const Calendar: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <IonHeader>
+      <IonHeader>
           <IonToolbar>
-            <IonTitle style={{ textAlign: "center" }}>Calendar</IonTitle>
+            <IonButtons slot="start">
+              <IonMenuButton />
+            </IonButtons>
+            <IonTitle slot="end">Calendar</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonButton
