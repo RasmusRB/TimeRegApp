@@ -18,7 +18,7 @@ const Calendar: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader>
           <IonToolbar>
             <IonTitle style={{ textAlign: "center" }}>Calendar</IonTitle>
           </IonToolbar>

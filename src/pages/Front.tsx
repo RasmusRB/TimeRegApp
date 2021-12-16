@@ -18,8 +18,7 @@ const Front: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen id="main">
-        <IonButton slot="start"></IonButton>
-        <IonHeader collapse="condense">
+        <IonHeader>
           <IonToolbar>
             <IonTitle style={{ textAlign: "center" }}>
               <IonMenuButton />

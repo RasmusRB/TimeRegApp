@@ -90,7 +90,7 @@ const SignUp: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader>
           <IonToolbar>
             <IonTitle style={{ textAlign: "center" }}>Sign Up</IonTitle>
           </IonToolbar>

@@ -25,7 +25,7 @@ const Forgotten: React.FC = () => {
   return (
     <IonPage className="bgContent">
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader>
           <IonToolbar>
             <IonTitle style={{ textAlign: "center" }}>Reset Password</IonTitle>
           </IonToolbar>

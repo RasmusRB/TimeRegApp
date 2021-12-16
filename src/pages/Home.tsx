@@ -45,29 +45,27 @@ const Home: React.FC = () => {
       setError("Password must be at least 8 characters!");
     } else {
       try {
-
         await axios({
           method: "post",
           url: "http://localhost:5014/user/login",
           headers: {
-          Accept: "*/*",
-          "Content-Type": "multipart/form-data",
-        },
-        data: formdata,
-      })
-      .then((res) => {
-        setUserSession(res.data, email);
-        const user = getUser();
-          alert("Welcome " + user);
-          history.push("/Front");
+            Accept: "*/*",
+            "Content-Type": "multipart/form-data",
+          },
+          data: formdata,
         })
-        .catch((error) => {
-          if (error.response.status === 400) {
-            error = setError("Wrong username or password.");
-          } else error = setError("Something went wrong, try again later.");
-        });
-      } catch (Exception )
-      {
+          .then((res) => {
+            setUserSession(res.data, email);
+            const user = getUser();
+            alert("Welcome " + user);
+            history.push("/Front");
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              error = setError("Wrong username or password.");
+            } else error = setError("Something went wrong, try again later.");
+          });
+      } catch (Exception) {
         alert("Something bad happened! ");
       }
     }
@@ -81,7 +79,7 @@ const Home: React.FC = () => {
   return (
     <IonPage className="bgContent">
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
+        <IonHeader>
           <IonToolbar>
             <IonTitle style={{ textAlign: "center" }}>TimeRegApp</IonTitle>
           </IonToolbar>
@@ -103,36 +101,38 @@ const Home: React.FC = () => {
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
             <br />
-            {error && (
-              <>
-                <IonLabel
-                  style={{
-                    color: "red",
-                    fontFamily: "monospace",
-                    justifyContent: "center",
-                    alignContent: "center",
-                    textAlign: "center",
-                    width: "200px",
-                  }}
-                >
-                  {error}
-                </IonLabel>
-              </>
-            )}
-            <IonButton
-              expand="block"
-              fill="solid"
-              onClick={handleLogin}
-            >
+            <div style={{justifyContent: "center", alignContent: "center", display: "grid"}}>
+              {error && (
+                <>
+                  <IonLabel
+                    style={{
+                      color: "red",
+                      fontFamily: "monospace",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      textAlign: "center",
+                      width: "200px",
+                    }}
+                  >
+                    {error}
+                  </IonLabel>
+                </>
+              )}
+            </div>
+            <br />
+            <IonButton expand="block" fill="solid" onClick={handleLogin}>
               Log in
             </IonButton>
-            <IonButton
-              expand="block"
-              onClick={handleNavigate}
-            >
+            <IonButton expand="block" onClick={handleNavigate}>
               Sign up
             </IonButton>
-            <div style={{ textAlign: "center", margin: "50px", fontFamily: "monospace" }}>
+            <div
+              style={{
+                textAlign: "center",
+                margin: "50px",
+                fontFamily: "monospace",
+              }}
+            >
               <p>
                 <Link to="/Forgotten">Forgotten password?</Link>
                 <IonRippleEffect></IonRippleEffect>
