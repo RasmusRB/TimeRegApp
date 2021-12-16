@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Attributes } from "react";
 import {
   IonButton,
   IonButtons,
@@ -11,26 +11,73 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { getUser } from "../utils/Common";
+import { getUser, getToken } from "../utils/Common";
 import axios from "axios";
 import { IUser } from "../interfaces/IUser";
+import { useHistory } from "react-router";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<IUser>();
 
+  const [email, setEmail] = useState("");
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [password, setPassword] = useState("");
+
   const user = getUser();
+  const token = getToken();
+  let history = useHistory();
 
   useEffect(() => {
+    const fetchUser = () => {
+      const config = {
+        headers: {
+        Accept: "*/*",
+        Authorization: "Bearer " + token,
+      },
+    };
+    
     axios
-      .get<IUser>(`http://localhost:5014/user/getuser?email=${user}`)
+    .get<IUser>(`http://localhost:5014/user/getuser?email=${user}`, config)
+    .then((res) => {
+      setUserData(res.data);
+      console.log(res.data);
+    })
+    .catch((error) => {
+      alert(error.message);
+    });
+  }
+  fetchUser();
+  }, []);
+
+  const handleUpdate = async (e: any) => {
+    e.preventDefault();
+
+    let formdata = new FormData();
+    formdata.append("email", email);
+    formdata.append("firstname", firstname);
+    formdata.append("lastname", lastname);
+    formdata.append("telephone", telephone);
+    formdata.append("password", password);
+
+    let config = {
+      headers: {
+        Accept: "*/*",
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    await axios
+      .post(`http://localhost:5014/user/update/${userData?.id}`, formdata, config)
       .then((res) => {
-        setUserData(res.data);
-        console.log(res.data);
+        alert("User updated!");
+        history.push("/Front")
       })
       .catch((error) => {
-        alert(error.message);
+        alert("Something went wrong!");
       });
-  }, []);
+  };
 
   return (
     <IonPage>
@@ -44,41 +91,48 @@ const Profile: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <div className="center-container">
-          <IonLabel className="lbl-form">First name</IonLabel>
-          <IonInput
-            className="input-form"
-            placeholder={userData?.firstname}
-            style={{ textAlign: "center" }}
-          />
-          <IonLabel className="lbl-form">Last name</IonLabel>
-          <IonInput
-            className="input-form"
-            placeholder={userData?.lastname}
-            style={{ textAlign: "center" }}
-          />
-          <IonLabel className="lbl-form">Email</IonLabel>
-          <IonInput
-            className="input-form"
-            placeholder={userData?.email}
-            style={{ textAlign: "center" }}
-          />
-          <IonLabel className="lbl-form">Telephone</IonLabel>
-          <IonInput
-            className="input-form"
-            placeholder={userData?.telephone}
-            style={{ textAlign: "center" }}
-          />
-        </div>
+          <form>
+            <IonLabel className="lbl-form">First name</IonLabel>
+            <IonInput
+              className="input-form"
+              placeholder={userData?.firstname}
+              style={{ textAlign: "center" }}
+              onIonChange={(e: any) => setFirstname(e.target.value)}
+            />
+            <IonLabel className="lbl-form">Last name</IonLabel>
+            <IonInput
+              className="input-form"
+              placeholder={userData?.lastname}
+              style={{ textAlign: "center" }}
+              onIonChange={(e: any) => setLastname(e.target.value)}
+            />
+            <IonLabel className="lbl-form">Email</IonLabel>
+            <IonInput
+              className="input-form"
+              placeholder={userData?.email}
+              style={{ textAlign: "center" }}
+              onIonChange={(e: any) => setEmail(e.target.value)}
+            />
+            <IonLabel className="lbl-form">Telephone</IonLabel>
+            <IonInput
+              className="input-form"
+              placeholder={userData?.telephone}
+              style={{ textAlign: "center" }}
+              onIonChange={(e: any) => setTelephone(e.target.value)}
+            />
+            <IonLabel className="lbl-form">Password</IonLabel>
+            <IonInput
+              className="input-form"
+              type="password"
+              placeholder={userData?.password}
+              style={{ textAlign: "center" }}
+              onIonChange={(e: any) => setPassword(e.target.value)}
+            />
 
-        <div
-          style={{
-            textAlign: "center",
-            justifyContent: "center",
-            display: "grid",
-            alignContent: "center",
-          }}
-        >
-          <IonButton>Update</IonButton>
+            <IonButton expand="block" fill="solid" onClick={handleUpdate}>
+              Update
+            </IonButton>
+          </form>
         </div>
       </IonContent>
     </IonPage>
