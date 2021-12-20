@@ -5,5 +5,5 @@ export interface IUser {
     firstname: string,
     lastname: string,
     telephone: string,
-    role: string
+    admin: boolean
 }
