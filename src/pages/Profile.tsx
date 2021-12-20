@@ -15,6 +15,7 @@ import { getUser, getToken } from "../utils/Common";
 import axios from "axios";
 import { IUser } from "../interfaces/IUser";
 import { useHistory } from "react-router";
+import { useAuth } from "../AuthContext";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<IUser>();
@@ -26,7 +27,7 @@ const Profile: React.FC = () => {
   const [password, setPassword] = useState("");
 
   const user = getUser();
-  const token = getToken();
+  const { authInfo } = useAuth();
   let history = useHistory();
 
   useEffect(() => {
@@ -34,12 +35,12 @@ const Profile: React.FC = () => {
       const config = {
         headers: {
         Accept: "*/*",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + authInfo.user.token,
       },
     };
     
     axios
-    .get<IUser>(`http://localhost:5014/user/getuser?email=${user}`, config)
+    .get<IUser>(`http://localhost:5014/user/getuser?email=${authInfo.user.email}`, config)
     .then((res) => {
       setUserData(res.data);
       console.log(res.data);
@@ -64,12 +65,12 @@ const Profile: React.FC = () => {
     let config = {
       headers: {
         Accept: "*/*",
-        Authorization: "Bearer " + token,
+        Authorization: "Bearer " + authInfo.user.token,
       },
     };
 
     await axios
-      .post(`http://localhost:5014/user/update/${userData?.id}`, formdata, config)
+      .post(`http://localhost:5014/user/update/${authInfo.user.id}`, formdata, config)
       .then((res) => {
         alert("User updated!");
         history.push("/Front")

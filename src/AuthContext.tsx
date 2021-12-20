@@ -10,6 +10,7 @@ export type IAuthContext = {
       id: number;
       email: string;
       admin: boolean;
+      token: string;
     };
   };
   logOut: any;
@@ -57,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         const decoded = jwtDecode<IToken>(token);
         let value = {
           loggedIn: true,
-          user: { email: decoded.sub, id: decoded.id, admin: decoded.admin },
+          user: { email: decoded.sub, id: decoded.id, admin: decoded.admin, token: token },
         };
         setAuthInfo(value);
         // maybe
