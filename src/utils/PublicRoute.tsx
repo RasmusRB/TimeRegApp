@@ -1,6 +1,5 @@
-import * as React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import { getToken } from "./Common";
+import { useAuth } from '../AuthContext';
 
 interface PublicRouteProps extends RouteProps {
   component: any;
@@ -8,12 +7,13 @@ interface PublicRouteProps extends RouteProps {
 
 const PublicRoute = (props: PublicRouteProps) => {
   const { component: Component, ...rest } = props;
+  const { authInfo } = useAuth();
 
   return (
     <Route
       {...rest}
       render={(routeProps) =>
-        !getToken() ? (
+        authInfo.user.admin.toString() === "False" ? (
           <Component {...routeProps} />
         ) : (
           <Redirect

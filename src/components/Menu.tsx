@@ -30,9 +30,8 @@ import {
   personSharp,
 } from "ionicons/icons";
 import "./Menu.css";
-import { getToken, getUser, removeUserSession } from "../utils/Common";
 import { IAppPages } from "../interfaces/IAppPages";
-import { useState, useEffect } from "react";
+import { useAuth } from "../AuthContext";
 
 // Define links in menu
 const AdminAppPages: IAppPages[] = [
@@ -58,8 +57,14 @@ const AdminAppPages: IAppPages[] = [
     title: "Users",
     url: "/Users",
     iosIcon: personOutline,
-    mdIcon: personSharp,
+    mdIcon: personSharp
   },
+  {
+    title: "Activities",
+    url: "/Activities",
+    iosIcon: personOutline,
+    mdIcon: personSharp
+  }
 ];
 
 const UserAppPages: IAppPages[] = [
@@ -88,34 +93,23 @@ const Menu: React.FC = () => {
   let history = useHistory();
 
   const location = useLocation();
-  const user = getUser();
-  const [admin, setAdmin] = useState();
+  const { logOut, authInfo } = useAuth();
 
   // logs the user out by removing his session => see ./utils/Common.tsx
   const logout = () => {
-    removeUserSession();
+    logOut()
     history.push("/");
   };
-
-  useEffect(() => {
-    try {
-      let token = getToken() || '';
-      let decoded = JSON.parse(atob(token.split(".")[1]));
-      setAdmin(decoded.admin)
-    } catch (e) {
-      return;
-    }
-  }, [])
 
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
           <IonListHeader>TimeRegApp</IonListHeader>
-          <IonNote>{user}</IonNote>
+          <IonNote>{authInfo.user.email}</IonNote> <br/>
+          <IonNote>{authInfo.user.admin.toString() === "True" ? 'Admin' : 'User'}</IonNote>
           { 
-            admin === true
-            ?
+          authInfo.user.admin.toString() === "True" ?
             AdminAppPages.map((appPage, index) => {
                 return (
                   <IonMenuToggle key={index} autoHide={false}>
@@ -137,28 +131,31 @@ const Menu: React.FC = () => {
                     </IonItem>
                   </IonMenuToggle>
                 );
-              })
-            : UserAppPages.map((ap, i) => {
+              }) : UserAppPages.map((ap, idx) => {
                 return (
-                  <IonMenuToggle key={i} autoHide={false}>
+                  <IonMenuToggle key={idx} autoHide={false}>
                     <IonItem
-                      className={location.pathname === ap.url ? "selected" : ""}
+                      className={
+                        location.pathname === ap.url ? "selected" : ""
+                      }
                       routerLink={ap.url}
                       routerDirection="none"
                       lines="none"
                       detail={false}
                     >
-                      <IonIcon slot="start" ios={ap.iosIcon} md={ap.mdIcon} />
+                      <IonIcon
+                        slot="start"
+                        ios={ap.iosIcon}
+                        md={ap.mdIcon}
+                      />
                       <IonLabel>{ap.title}</IonLabel>
                     </IonItem>
                   </IonMenuToggle>
                 );
-            })
+              })
           }
         </IonList>
-        <IonButton expand="block" fill="solid" onClick={logout}>
-          Logout
-        </IonButton>
+        <IonButton expand="block" fill="solid" onClick={logout}>Log out</IonButton>
       </IonContent>
     </IonMenu>
   );

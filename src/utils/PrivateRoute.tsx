@@ -1,6 +1,5 @@
-import * as React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import { getToken } from "./Common";
+import { useAuth } from '../AuthContext';
 
 interface PrivateRouteProps extends RouteProps {
   component: any;
@@ -8,12 +7,13 @@ interface PrivateRouteProps extends RouteProps {
 
 const PrivateRoute = (props: PrivateRouteProps) => {
   const { component: Component, ...rest } = props;
+  const { authInfo } = useAuth();
 
   return (
     <Route
       {...rest}
       render={(routeProps) =>
-        getToken() ? (
+        authInfo.user.admin.toString() === "True" ? (
           <Component {...routeProps} />
         ) : (
           <Redirect

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   IonButton,
   IonButtons,
+  IonCard,
   IonContent,
   IonHeader,
   IonInput,
@@ -29,6 +30,10 @@ const Front: React.FC = () => {
               <IonTitle slot="end">Whale cum</IonTitle>
             </IonToolbar>
           </IonHeader>
+          <IonCard>
+            // TODO
+            Whale cum text - Explain about project :C
+          </IonCard>
 
           <IonButton
             expand="block"

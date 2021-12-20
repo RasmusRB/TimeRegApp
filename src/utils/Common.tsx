@@ -1,4 +1,6 @@
 // Returns user data from session storage
+// MOVED AND IMPROVED IN AUTHCONTEXT!
+
 export const getUser = () => {
     const userData = sessionStorage.getItem("user");
     if (userData) return JSON.parse(userData);
