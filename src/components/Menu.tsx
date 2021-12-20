@@ -21,6 +21,7 @@ import {
   // mailSharp,
   // paperPlaneOutline,
   // paperPlaneSharp,
+  peopleOutline,
   timeOutline,
   timeSharp,
   calendarOutline,
@@ -28,6 +29,9 @@ import {
   calendarSharp,
   personOutline,
   personSharp,
+  peopleSharp,
+  listOutline,
+  listSharp,
 } from "ionicons/icons";
 import "./Menu.css";
 import { IAppPages } from "../interfaces/IAppPages";
@@ -56,14 +60,14 @@ const AdminAppPages: IAppPages[] = [
   {
     title: "Users",
     url: "/Users",
-    iosIcon: personOutline,
-    mdIcon: personSharp
+    iosIcon: peopleOutline,
+    mdIcon: peopleSharp
   },
   {
     title: "Activities",
     url: "/Activities",
-    iosIcon: personOutline,
-    mdIcon: personSharp
+    iosIcon: listOutline,
+    mdIcon: listSharp
   }
 ];
 

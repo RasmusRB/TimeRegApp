@@ -61,8 +61,6 @@ export const AuthProvider: React.FC = ({ children }) => {
           user: { email: decoded.sub, id: decoded.id, admin: decoded.admin, token: token },
         };
         setAuthInfo(value);
-        // maybe
-        //setUserSession(token, decoded.email);
         setTimeout(() => {
           return res.data;
         }, 1000);

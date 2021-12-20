@@ -52,9 +52,10 @@ const Users: React.FC = () => {
         </IonHeader>
         <IonList>
           {
-            users?.map((u, i) => {
+            // Sorting by id
+            users?.sort((a, b) => { return a.id - b.id }).map((u, i) => {
               return ( 
-              <IonItem>Id: {u.id}, Email: {u.email}, Firstname: {u.firstname}, Lastname: {u.lastname}, Phone: {u.telephone}</IonItem> )
+              <IonItem key={i}>Id: {u.id}, Email: {u.email}, Firstname: {u.firstname}, Lastname: {u.lastname}, Phone: {u.telephone}</IonItem> )
             })
           }
         </IonList>

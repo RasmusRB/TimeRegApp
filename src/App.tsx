@@ -4,6 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 import TimeRegistration from "./pages/TimeRegistration";
 import Activities from "./pages/Activities";
 import Forgotten from "./pages/Forgotten";
+import Activity from "./pages/Activity";
 import Calendar from "./pages/Calendar";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
@@ -52,6 +53,7 @@ const App: React.FC = () => {
               <Route path="/TimeRegistration" component={TimeRegistration} />
               <PrivateRoute path="/Users" component={Users}/>
               <PrivateRoute path="/Activities" component={Activities}/>
+              <PrivateRoute path="/Activities/:id" component={Activity} />
             </IonRouterOutlet>
           </IonSplitPane>
         ) : (

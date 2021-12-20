@@ -38,7 +38,9 @@ const Home: React.FC = () => {
   const handleSubmit = () => {
     try {
       logIn(email, password);
-      history.push("/Front");
+      if (logIn){
+        history.push("/Front");
+      }
     } catch {}
   };
 
