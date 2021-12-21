@@ -138,10 +138,10 @@ const Home: React.FC = () => {
               )}
             </div>
             <br />
-            <IonButton expand="block" fill="solid" onClick={handleSubmit}>
+            <IonButton expand="block" style={{ margin: "10px" }} fill="solid" onClick={handleSubmit}>
               Log in
             </IonButton>
-            <IonButton expand="block" onClick={handleNavigate}>
+            <IonButton expand="block" style={{ margin: "10px" }} onClick={handleNavigate}>
               Sign up
             </IonButton>
             <div

@@ -134,10 +134,10 @@ const Profile: React.FC = () => {
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
 
-            <IonButton expand="block" fill="solid" onClick={handleUpdate}>
+            <IonButton expand="block" fill="solid" style={{ margin: "10px" }} onClick={handleUpdate}>
               Update
             </IonButton>
-            <IonButton expand="block" fill="solid" onClick={goBack}>
+            <IonButton expand="block" fill="solid" style={{ margin: "10px" }} onClick={goBack}>
           Back
         </IonButton>
           </form>

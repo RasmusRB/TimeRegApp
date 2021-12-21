@@ -81,8 +81,8 @@ const Activity: React.FC = () => {
             </IonItem>
           </IonList>
         </IonCard>
-        <IonButton expand="block" fill="solid" color="danger" onClick={handleDelete}>Delete</IonButton>
-        <IonButton expand="block" fill="solid" onClick={goBack}>
+        <IonButton style={{ margin: "10px" }} expand="block" fill="solid" color="danger" onClick={handleDelete}>Delete</IonButton>
+        <IonButton style={{ margin: "10px" }} expand="block" fill="solid" onClick={goBack}>
           Back
         </IonButton>
       </IonContent>

@@ -1,28 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   IonButton,
   IonButtons,
+  IonCard,
   IonContent,
   IonHeader,
   IonInput,
+  IonLabel,
   IonMenuButton,
   IonPage,
+  IonSelect,
+  IonSelectOption,
   IonTextarea,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import axios from "axios";
+import { useAuth } from "../AuthContext";
+import { useHistory } from "react-router";
+
+interface Activity {
+  id: number;
+  activity: string;
+}
 
 const TimeRegistration: React.FC = () => {
-  function showDate() {
-    var today = new Date();
-    var date =
-      today.getDate() +
-      "-" +
-      (today.getMonth() + 1) +
-      "-" +
-      today.getFullYear();
-    //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    return date;
+  const [activities, setActivities] = useState<Activity[]>();
+  const [activityId, setActivityId] = useState();
+  const [comment, setComment] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndtime] = useState('');
+  const { authInfo } = useAuth();
+
+  let history = useHistory();
+
+  useEffect(() => {
+    const getActivities = () => {
+      const config = {
+        headers: {
+          Accept: "*/*",
+          Authorization: "Bearer " + authInfo.user.token,
+        },
+      };
+      axios
+        .get(`http://localhost:5014/api/activities`, config)
+        .then((res) => {
+          setActivities(res.data);
+        })
+        .catch((error) => {
+          alert("Try reload!");
+        });
+    };
+    getActivities();
+  });
+
+  const goBack = () => {
+    history.goBack();
+  }
+
+  const handleSelect = (e: any) => {
+    setActivityId(e.target.value)
   }
 
   return (
@@ -36,52 +73,32 @@ const TimeRegistration: React.FC = () => {
             <IonTitle slot="end">Time Registration</IonTitle>
           </IonToolbar>
         </IonHeader>
-
-        {/* <IonHeader style={{ textAlign: "right" }}>{showDate()}</IonHeader> */}
-        <form>
-          <IonInput
-            placeholder="Start time"
-            style={{ textAlign: "center" }}
-          ></IonInput>
-          <IonInput
-            placeholder="End time"
-            style={{ textAlign: "center" }}
-          ></IonInput>
-
-          <div
-            style={{
-              textAlign: "center",
-              justifyContent: "center",
-              display: "grid",
-              alignContent: "center",
-            }}
-          >
-            <select name="noget" id="noget">
-              <option value="noget" selected>
-                Choose activity
-              </option>
-              <option value="noget">Programming</option>
-              <option value="noget">Meeting</option>
-              <option value="noget">Planning</option>
-            </select>
-          </div>
-
-          <IonTextarea
-            placeholder="Comments"
-            style={{ textAlign: "center" }}
-          ></IonTextarea>
-
-          <div
-            style={{
-              textAlign: "center",
-              justifyContent: "center",
-              display: "grid",
-              alignContent: "center",
-            }}
-          >
-            <IonButton>Submit</IonButton>
-          </div>
-        </form>
+        <IonCard>
+          <IonLabel className="lbl-form">Start time</IonLabel>
+          <IonInput className="input-form" onIonChange={(e: any) => setStartTime(e.target.value)}/>
+          <IonLabel className="lbl-form">End time</IonLabel>
+          <IonInput className="input-form" onIonChange={(e: any) => setEndtime(e.target.value)}/>
+          <IonLabel className="lbl-form">Comment</IonLabel>
+          <IonTextarea className="input form" onIonChange={(e: any) => setComment(e.target.value)}/>
+          <IonSelect placeholder="--Select--" style={{color: "black"}} onIonChange={handleSelect}>
+            {activities?.map((a, i) => {
+              return (
+                <IonSelectOption value={a.id} key={i}>{a.activity}</IonSelectOption>
+              );
+            })}
+          </IonSelect>
+        </IonCard>
+        <IonButton expand="block" fill="solid" style={{ margin: "10px" }}>
+          Submit
+        </IonButton>
+        <IonButton
+          expand="block"
+          fill="solid"
+          style={{ margin: "10px" }}
+          onClick={goBack}
+        >
+          Back
+        </IonButton>
       </IonContent>
     </IonPage>
   );

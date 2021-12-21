@@ -228,6 +228,7 @@ const SignUp: React.FC = () => {
               expand="block"
               fill="solid"
               type="submit"
+              style={{ margin: "10px" }}
               //color="danger"
             >
               Sign Up
@@ -235,6 +236,7 @@ const SignUp: React.FC = () => {
             <IonButton
               expand="block"
               fill="solid"
+              style={{ margin: "10px" }}
               onClick={navigateBack}
             >
               Back

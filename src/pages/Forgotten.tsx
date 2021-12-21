@@ -46,10 +46,10 @@ const Forgotten: React.FC = () => {
               clearInput={true}
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
-            <IonButton expand="block" fill="solid" type="submit">
+            <IonButton style={{ margin: "10px" }} expand="block" fill="solid" type="submit">
               Submit
             </IonButton>
-            <IonButton expand="block" fill="solid" onClick={history.goBack}>
+            <IonButton style={{ margin: "10px" }} expand="block" fill="solid" onClick={history.goBack}>
               Back
             </IonButton>
           </form>
