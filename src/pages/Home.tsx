@@ -35,13 +35,16 @@ const Home: React.FC = () => {
   };
 
   // TODO improve checks etc
-  const handleSubmit = () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
     try {
-      logIn(email, password);
-      if (logIn){
-        history.push("/Front");
-      }
-    } catch {}
+      await logIn(email, password);
+      alert("Welcome");
+      history.push("/Front");
+    } catch {
+      alert("Some error");
+    }
   };
 
   // log in post function => using axios library for http requests
@@ -138,10 +141,19 @@ const Home: React.FC = () => {
               )}
             </div>
             <br />
-            <IonButton expand="block" style={{ margin: "10px" }} fill="solid" onClick={handleSubmit}>
+            <IonButton
+              expand="block"
+              style={{ margin: "10px" }}
+              fill="solid"
+              onClick={handleSubmit}
+            >
               Log in
             </IonButton>
-            <IonButton expand="block" style={{ margin: "10px" }} onClick={handleNavigate}>
+            <IonButton
+              expand="block"
+              style={{ margin: "10px" }}
+              onClick={handleNavigate}
+            >
               Sign up
             </IonButton>
             <div

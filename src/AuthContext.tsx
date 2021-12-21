@@ -27,7 +27,6 @@ const AuthContext = React.createContext<any>(undefined);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [authInfo, setAuthInfo] = React.useState<any>();
-  let history = useHistory();
 
   const logOut = () => {
     return new Promise((resolve) => {
@@ -58,7 +57,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         const decoded = jwtDecode<IToken>(token);
         let value = {
           loggedIn: true,
-          user: { email: decoded.sub, id: decoded.id, admin: decoded.admin, token: token },
+          user: {
+            email: decoded.sub,
+            id: decoded.id,
+            admin: decoded.admin,
+            token: token,
+          },
         };
         setAuthInfo(value);
         setTimeout(() => {
@@ -67,7 +71,6 @@ export const AuthProvider: React.FC = ({ children }) => {
       })
       .catch((err) => {
         alert("Login failed!");
-        console.log(err)
       });
   };
 

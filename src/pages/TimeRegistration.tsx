@@ -4,6 +4,7 @@ import {
   IonButtons,
   IonCard,
   IonContent,
+  IonDatetime,
   IonHeader,
   IonInput,
   IonLabel,
@@ -26,11 +27,12 @@ interface Activity {
 
 const TimeRegistration: React.FC = () => {
   const [activities, setActivities] = useState<Activity[]>();
-  const [activityId, setActivityId] = useState();
-  const [comment, setComment] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndtime] = useState('');
+  const [activityId, setActivityId] = useState<any>();
+  const [comment, setComment] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndtime] = useState("");
   const { authInfo } = useAuth();
+  const [userId] = useState<any>(authInfo.user.id);
 
   let history = useHistory();
 
@@ -56,11 +58,41 @@ const TimeRegistration: React.FC = () => {
 
   const goBack = () => {
     history.goBack();
-  }
+  };
 
   const handleSelect = (e: any) => {
-    setActivityId(e.target.value)
-  }
+    setActivityId(e.target.value);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        Accept: "*/*",
+        Authoraization: "Bearer " + authInfo.user.token,
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    let formData = new FormData();
+    formData.append("Started", startTime);
+    formData.append("Ended", endTime);
+    formData.append("ActivityId", activityId);
+    formData.append("UserId", userId);
+
+    console.log(activityId);
+    console.log(userId);
+
+    axios
+      .post(`http://localhost:5014/api/timeregcreate`, formData, config)
+      .then((res) => {
+        alert("Successful create!");
+      })
+      .catch((error) => {
+        alert("Fail create!");
+      });
+  };
 
   return (
     <IonPage>
@@ -75,20 +107,43 @@ const TimeRegistration: React.FC = () => {
         </IonHeader>
         <IonCard>
           <IonLabel className="lbl-form">Start time</IonLabel>
-          <IonInput className="input-form" onIonChange={(e: any) => setStartTime(e.target.value)}/>
+          <IonInput
+            type="datetime-local"
+            className="lbl-form"
+            onIonChange={(e: any) => setStartTime(e.target.value)}
+          />
           <IonLabel className="lbl-form">End time</IonLabel>
-          <IonInput className="input-form" onIonChange={(e: any) => setEndtime(e.target.value)}/>
+          <IonInput
+            type="datetime-local"
+            className="lbl-form"
+            onIonChange={(e: any) => setEndtime(e.target.value)}
+          />
           <IonLabel className="lbl-form">Comment</IonLabel>
-          <IonTextarea className="input form" onIonChange={(e: any) => setComment(e.target.value)}/>
-          <IonSelect placeholder="--Select--" style={{color: "black"}} onIonChange={handleSelect}>
+          <IonTextarea
+            className="input form"
+            style={{ margin: "10px", fontFamily: "monospace" }}
+            onIonChange={(e: any) => setComment(e.target.value)}
+          />
+          <IonSelect
+            placeholder="--Select--"
+            style={{ color: "black", fontFamily: "monospace" }}
+            onIonChange={handleSelect}
+          >
             {activities?.map((a, i) => {
               return (
-                <IonSelectOption value={a.id} key={i}>{a.activity}</IonSelectOption>
+                <IonSelectOption value={a.id} key={i}>
+                  {a.activity}
+                </IonSelectOption>
               );
             })}
           </IonSelect>
         </IonCard>
-        <IonButton expand="block" fill="solid" style={{ margin: "10px" }}>
+        <IonButton
+          expand="block"
+          fill="solid"
+          style={{ margin: "10px" }}
+          onClick={handleSubmit}
+        >
           Submit
         </IonButton>
         <IonButton
