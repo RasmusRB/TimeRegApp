@@ -80,6 +80,10 @@ const Profile: React.FC = () => {
       });
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -133,6 +137,9 @@ const Profile: React.FC = () => {
             <IonButton expand="block" fill="solid" onClick={handleUpdate}>
               Update
             </IonButton>
+            <IonButton expand="block" fill="solid" onClick={goBack}>
+          Back
+        </IonButton>
           </form>
         </div>
       </IonContent>

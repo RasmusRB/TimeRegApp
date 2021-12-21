@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import Front from "./pages/Front";
 import Users from "./pages/Users";
+import User from "./pages/User";
 import Home from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
@@ -37,7 +38,6 @@ import Menu from "./components/Menu";
 
 // Add routing and components
 const App: React.FC = () => {
-
   const { authInfo } = useAuth();
 
   return (
@@ -48,13 +48,14 @@ const App: React.FC = () => {
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/Front" component={Front} />
-              <Route path="/Profile" component={Profile}/>
-              <Route path="/Calendar" component={Calendar}/>
+              <Route path="/Profile" component={Profile} />
+              <Route path="/Calendar" component={Calendar} />
               <Route path="/TimeRegistration" component={TimeRegistration} />
-              <PrivateRoute path="/Users" component={Users}/>
-              <PrivateRoute path="/Activities" component={Activities}/>
-              <PrivateRoute path="/Activities/:id" component={Activity} />
+              <PrivateRoute exact path="/Users" component={Users} />
+              <PrivateRoute exact path="/Activities" component={Activities} />
             </IonRouterOutlet>
+            <PrivateRoute exact path="/Activities/:id" component={Activity} />
+            <PrivateRoute exact path="/Users/:id" component={User} />
           </IonSplitPane>
         ) : (
           <>

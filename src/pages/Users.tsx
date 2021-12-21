@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   IonButtons,
+  IonCard,
   IonContent,
   IonHeader,
   IonItem,
@@ -13,31 +14,32 @@ import {
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { IUser } from "../interfaces/IUser";
+import { Link } from "react-router-dom";
 
 const Users: React.FC = () => {
-
   const [users, setUsers] = useState<IUser[]>();
   const { authInfo } = useAuth();
 
   useEffect(() => {
     const getAllUsers = () => {
-
       const config = {
         headers: {
-          'Accept': '*/*',
-          'Authorization': 'Bearer ' + authInfo.user.token
-        }
-      }
+          Accept: "*/*",
+          Authorization: "Bearer " + authInfo.user.token,
+        },
+      };
 
-      axios.get(`http://localhost:5014/user/getallusers`, config)
-      .then(res => {
-        setUsers(res.data)
-      }).catch(error => {
-        alert(error.message)
-      })
-    }
-    getAllUsers()
-  } )
+      axios
+        .get(`http://localhost:5014/user/getallusers`, config)
+        .then((res) => {
+          setUsers(res.data);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    };
+    getAllUsers();
+  });
 
   return (
     <IonPage className="bgContent">
@@ -50,15 +52,28 @@ const Users: React.FC = () => {
             <IonTitle slot="end">Users</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonList>
-          {
-            // Sorting by id
-            users?.sort((a, b) => { return a.id - b.id }).map((u, i) => {
-              return ( 
-              <IonItem key={i}>Id: {u.id}, Email: {u.email}, Firstname: {u.firstname}, Lastname: {u.lastname}, Phone: {u.telephone}</IonItem> )
-            })
-          }
-        </IonList>
+        <IonCard>
+          <IonList>
+            {
+              
+              // Sorting by id
+              users
+              ?.sort((a, b) => {
+                return a.id - b.id;
+              })
+              .map((u, i) => {
+                return (
+                  <IonItem key={i}>
+                      <Link to={{ pathname: `Users/${u.id}`, state: { u }, }}>
+                      Id: {u.id}<br/> Email: {u.email}<br/> Firstname: {u.firstname}<br/>
+                      Lastname: {u.lastname}<br/> Phone: {u.telephone} <br/><br/>
+                    </Link>
+                    </IonItem>
+                  );
+                })
+              }
+          </IonList>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

@@ -19,6 +19,7 @@ import {
 import axios from "axios";
 import { useAuth } from "../AuthContext";
 import { Link } from "react-router-dom";
+import { IonRouterLink } from "@ionic/react";
 
 const Activities: React.FC = () => {
   const [activity, setActivity] = useState<any>("");
@@ -103,7 +104,7 @@ const Activities: React.FC = () => {
               activities?.sort((a: any, b: any) => { return a.id - b.id}).map((act: any, i: any) => {
                   return (
                     <IonItem key={i}>
-                     <Link to={{ pathname: `/Activities/${act.id}`, state: { act } }}> Id: {act.id}, Activity: {act.activity} </Link>
+                     <Link to={{ pathname: `/Activities/${act.id}`, state: { act, }, }} key={act.id}> Id: {act.id}, Activity: {act.activity} </Link>
                     </IonItem>
                   );
                 })

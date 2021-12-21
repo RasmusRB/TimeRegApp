@@ -11,7 +11,7 @@ import {
   IonNote,
 } from "@ionic/react";
 
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import {
   // archiveOutline,
   // archiveSharp,
@@ -109,7 +109,7 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
-          <IonListHeader>TimeRegApp</IonListHeader>
+          <IonListHeader><Link to="/Front">TimeRegApp</Link></IonListHeader>
           <IonNote>{authInfo.user.email}</IonNote> <br/>
           <IonNote>{authInfo.user.admin.toString() === "True" ? 'Admin' : 'User'}</IonNote>
           { 

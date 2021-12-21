@@ -27,22 +27,29 @@ const Front: React.FC = () => {
               <IonButtons slot="start">
                 <IonMenuButton />
               </IonButtons>
-              <IonTitle slot="end">Whale cum</IonTitle>
+              <IonTitle slot="end">Welcome</IonTitle>
             </IonToolbar>
           </IonHeader>
-          <IonCard>
-            // TODO
-            Whale cum text - Explain about project :C
+          <IonCard style={{ padding: "5px" }}>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque
+              laborum illum nostrum sed error libero tempore distinctio omnis
+              molestias a.
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+              voluptatem accusantium officiis repellat autem maxime
+              necessitatibus dolorem vitae fuga inventore consectetur ipsum sint
+              ea eaque ullam tenetur reiciendis in, quia veritatis harum amet,
+              quo rerum?
+            </p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui,
+              eius quam. Minus exercitationem debitis maxime ab nemo
+              perferendis, explicabo blanditiis corporis molestiae quaerat
+              obcaecati deserunt deleniti ea consectetur quisquam repellendus.
+            </p>
           </IonCard>
-
-          <IonButton
-            expand="block"
-            fill="solid"
-            color="danger"
-            style={{ margin: "50px" }}
-          >
-            Log in
-          </IonButton>
         </IonContent>
       </IonSplitPane>
     </IonPage>
