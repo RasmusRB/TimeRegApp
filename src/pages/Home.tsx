@@ -12,9 +12,9 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { getUser, setUserSession } from "../utils/Common";
 import { useAuth } from "../AuthContext";
+import './Home.css';
+
 
 const Home: React.FC = () => {
   useEffect(() => {}, []);
@@ -39,52 +39,16 @@ const Home: React.FC = () => {
     e.preventDefault();
 
     try {
+      if (!validateEmail(email)) {
+        setError("Invalid email!");
+      } else if (password.length < 8) {
+        setError("Password must be at least 8 characters!");
+      }
       await logIn(email, password);
-      alert("Welcome");
-      history.push("/Front");
     } catch {
       alert("Some error");
     }
   };
-
-  // log in post function => using axios library for http requests
-  // const handleLogin = async () => {
-  //   let formdata = new FormData();
-  //   formdata.append("email", email);
-  //   formdata.append("password", password);
-
-  //   // validation checks (email + password length)
-  //   if (!validateEmail(email)) {
-  //     setError("Invalid email!");
-  //   } else if (password.length < 8) {
-  //     setError("Password must be at least 8 characters!");
-  //   } else {
-  //     try {
-  //       await axios({
-  //         method: "post",
-  //         url: "http://localhost:5014/user/login",
-  //         headers: {
-  //           Accept: "*/*",
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //         data: formdata,
-  //       })
-  //         .then((res) => {
-  //           setUserSession(res.data, email);
-  //           const user = getUser();
-  //           alert("Welcome " + user);
-  //           history.push("/page/");
-  //         })
-  //         .catch((error) => {
-  //           if (error.response.status === 400) {
-  //             error = setError("Wrong username or password.");
-  //           } else error = setError("Something went wrong, try again later.");
-  //         });
-  //     } catch (Exception) {
-  //       alert("Something bad happened! ");
-  //     }
-  //   }
-  // };
 
   // using navigation history to navigate
   const handleNavigate = () => {

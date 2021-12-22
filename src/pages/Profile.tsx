@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Attributes } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IonButton,
   IonButtons,
@@ -11,77 +11,86 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { getUser, getToken } from "../utils/Common";
 import axios from "axios";
 import { IUser } from "../interfaces/IUser";
 import { useHistory } from "react-router";
 import { useAuth } from "../AuthContext";
+import "./Profile.css";
 
 const Profile: React.FC = () => {
   const [userData, setUserData] = useState<IUser>();
 
   const [email, setEmail] = useState("");
-  const [firstname, setFirstname] = useState('');
+  const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [telephone, setTelephone] = useState("");
   const [password, setPassword] = useState("");
 
-  const user = getUser();
   const { authInfo } = useAuth();
   let history = useHistory();
 
   useEffect(() => {
     const fetchUser = () => {
-      const config = {
-        headers: {
-        Accept: "*/*",
-        Authorization: "Bearer " + authInfo.user.token,
-      },
+      try {
+        const config = {
+          headers: {
+            Accept: "*/*",
+            Authorization: "Bearer " + authInfo.user.token,
+          },
+        };
+
+        axios
+          .get<IUser>(
+            `http://localhost:5014/user/getuser?email=${authInfo.user.email}`,
+            config
+          )
+          .then((res) => {
+            setUserData(res.data);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      } catch {
+        alert("Failed to fetch!");
+      }
     };
-    
-    axios
-    .get<IUser>(`http://localhost:5014/user/getuser?email=${authInfo.user.email}`, config)
-    .then((res) => {
-      setUserData(res.data);
-      console.log(res.data);
-    })
-    .catch((error) => {
-      alert(error.message);
-    });
-  }
-  fetchUser();
+    fetchUser();
   }, []);
 
   const handleUpdate = async (e: any) => {
     e.preventDefault();
 
-    let formdata = new FormData();
-    formdata.append("email", email);
-    formdata.append("firstname", firstname);
-    formdata.append("lastname", lastname);
-    formdata.append("telephone", telephone);
-    formdata.append("password", password);
+    try {
+      let formdata = new FormData();
+      formdata.append("email", email);
+      formdata.append("firstname", firstname);
+      formdata.append("lastname", lastname);
+      formdata.append("telephone", telephone);
+      formdata.append("password", password);
 
-    let config = {
-      headers: {
-        Accept: "*/*",
-        Authorization: "Bearer " + authInfo.user.token,
-      },
-    };
+      let config = {
+        headers: {
+          Accept: "*/*",
+          Authorization: "Bearer " + authInfo.user.token,
+        },
+      };
 
-    await axios
-      .post(`http://localhost:5014/user/update/${authInfo.user.id}`, formdata, config)
-      .then((res) => {
-        alert("User updated!");
-        history.push("/Front")
-      })
-      .catch((error) => {
-        alert("Something went wrong!");
-      });
-  };
-
-  const goBack = () => {
-    history.goBack();
+      await axios
+        .post(
+          `http://localhost:5014/user/update/${authInfo.user.id}`,
+          formdata,
+          config
+        )
+        .then((res) => {
+          alert("User updated!");
+          history.push("/Front");
+        })
+        .catch((error) => {
+          alert("Something went wrong!");
+        });
+    } catch {
+      alert("Fail!");
+    }
   };
 
   return (
@@ -134,12 +143,14 @@ const Profile: React.FC = () => {
               onIonChange={(e: any) => setPassword(e.target.value)}
             />
 
-            <IonButton expand="block" fill="solid" style={{ margin: "10px" }} onClick={handleUpdate}>
+            <IonButton
+              expand="block"
+              fill="solid"
+              style={{ margin: "10px" }}
+              onClick={handleUpdate}
+            >
               Update
             </IonButton>
-            <IonButton expand="block" fill="solid" style={{ margin: "10px" }} onClick={goBack}>
-          Back
-        </IonButton>
           </form>
         </div>
       </IonContent>

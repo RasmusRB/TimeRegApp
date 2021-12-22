@@ -16,6 +16,7 @@ import {
 import { useHistory, useLocation } from "react-router";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
+import "./User.css";
 
 interface User {
   u: {
@@ -40,22 +41,29 @@ const User: React.FC = () => {
   const handleDelete = async (e: any) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        Accept: "*/*",
-        Authorization: "Bearer " + authInfo.user.token,
-      },
-    };
+    try {
+      const config = {
+        headers: {
+          Accept: "*/*",
+          Authorization: "Bearer " + authInfo.user.token,
+        },
+      };
 
-    await axios
-      .delete(`http://localhost:5014/user/delete?userEmail=${u.email}`, config)
-      .then((res) => {
-        alert("User deleted!");
-        history.push("/Users");
-      })
-      .catch((error) => {
-        alert("Delete unsuccesfull!");
-      });
+      await axios
+        .delete(
+          `http://localhost:5014/user/delete?userEmail=${u.email}`,
+          config
+        )
+        .then((res) => {
+          alert("User deleted!");
+          history.push("/Users");
+        })
+        .catch((error) => {
+          alert("Delete unsuccesfull!");
+        });
+    } catch {
+      alert("Failed to fetch!");
+    }
   };
 
   return (

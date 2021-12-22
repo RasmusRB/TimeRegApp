@@ -1,21 +1,16 @@
-import { useHistory } from "react-router";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  IonButton,
   IonButtons,
   IonCard,
   IonContent,
   IonHeader,
-  IonInput,
-  IonLabel,
   IonMenuButton,
-  IonMenuToggle,
   IonPage,
-  IonRippleEffect,
   IonSplitPane,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import './Front.css';
 
 const Front: React.FC = () => {
   return (

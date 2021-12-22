@@ -13,7 +13,6 @@ import {
 import axios from "axios";
 import { PasswordValidation } from "../hooks/PasswordValidation";
 import "./SignUp.css";
-import { on } from "events";
 
 const SignUp: React.FC = () => {
   let history = useHistory();
@@ -48,36 +47,40 @@ const SignUp: React.FC = () => {
   const handleSignUp = async (e: any) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "multipart/form-data",
-      },
-    };
+    try {
+      const config = {
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "multipart/form-data",
+        },
+      };
 
-    let formdata = new FormData();
-    formdata.append("email", email);
-    formdata.append("password", password.firstPassword);
-    formdata.append("firstname", firstname);
-    formdata.append("lastname", lastname);
-    formdata.append("telephone", telephone);
+      let formdata = new FormData();
+      formdata.append("email", email);
+      formdata.append("password", password.firstPassword);
+      formdata.append("firstname", firstname);
+      formdata.append("lastname", lastname);
+      formdata.append("telephone", telephone);
 
-    if (password.firstPassword !== password.secondPassword) {
-      setError("Passwords don't match!");
-    } else if (!validateEmail(email)) {
-      setError("Invalid email!");
-    } else if (password.secondPassword.length < 8) {
-      setError("Password blabla");
-    } else
-      await axios
-        .post(`http://localhost:5014/user/create`, formdata, config)
-        .then((res) => {
-          alert("Successfully created with Id : " + res.data);
-          history.push("/");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+      if (password.firstPassword !== password.secondPassword) {
+        setError("Passwords don't match!");
+      } else if (!validateEmail(email)) {
+        setError("Invalid email!");
+      } else if (password.secondPassword.length < 8) {
+        setError("Password blabla");
+      } else
+        await axios
+          .post(`http://localhost:5014/user/create`, formdata, config)
+          .then((res) => {
+            alert("Successfully created with Id : " + res.data);
+            history.push("/");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+    } catch {
+      alert("Failed to post!");
+    }
   };
 
   // Regex to validate email

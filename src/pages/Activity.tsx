@@ -1,25 +1,22 @@
 import { useHistory, useLocation } from "react-router";
-import React, { useState } from "react";
+import React from "react";
 import {
   IonButton,
   IonButtons,
   IonCard,
   IonContent,
   IonHeader,
-  IonInput,
   IonItem,
   IonLabel,
   IonList,
   IonMenuButton,
-  IonMenuToggle,
   IonPage,
-  IonRippleEffect,
-  IonSplitPane,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { useAuth } from "../AuthContext";
 import axios from "axios";
+import "./Activity.css";
 
 interface Activity {
   act: {
@@ -40,22 +37,26 @@ const Activity: React.FC = () => {
   const handleDelete = async (e: any) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        Accept: "*/*",
-        Authorization: "Bearer " + authInfo.user.token,
-      },
-    };
+    try {
+      const config = {
+        headers: {
+          Accept: "*/*",
+          Authorization: "Bearer " + authInfo.user.token,
+        },
+      };
 
-    await axios
-      .delete(`http://localhost:5014/api/activitydelete/${act.id}`, config)
-      .then((res) => {
-        alert("Activity deleted!");
-        history.push("/Activities");
-      })
-      .catch((error) => {
-        alert("Delete unsuccesfull!");
-      });
+      await axios
+        .delete(`http://localhost:5014/api/activitydelete/${act.id}`, config)
+        .then((res) => {
+          alert("Activity deleted!");
+          history.push("/Activities");
+        })
+        .catch((error) => {
+          alert("Delete unsuccesfull!");
+        });
+    } catch {
+      alert("Fail!");
+    }
   };
 
   return (
@@ -81,8 +82,21 @@ const Activity: React.FC = () => {
             </IonItem>
           </IonList>
         </IonCard>
-        <IonButton style={{ margin: "10px" }} expand="block" fill="solid" color="danger" onClick={handleDelete}>Delete</IonButton>
-        <IonButton style={{ margin: "10px" }} expand="block" fill="solid" onClick={goBack}>
+        <IonButton
+          style={{ margin: "10px" }}
+          expand="block"
+          fill="solid"
+          color="danger"
+          onClick={handleDelete}
+        >
+          Delete
+        </IonButton>
+        <IonButton
+          style={{ margin: "10px" }}
+          expand="block"
+          fill="solid"
+          onClick={goBack}
+        >
           Back
         </IonButton>
       </IonContent>

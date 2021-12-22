@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { useHistory } from "react-router";
 
 export type IAuthContext = {
   authInfo: {
@@ -66,6 +65,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         };
         setAuthInfo(value);
         setTimeout(() => {
+          alert("Welcome " + email);
           return res.data;
         }, 1000);
       })

@@ -45,6 +45,7 @@ const App: React.FC = () => {
       <IonReactRouter>
         {authInfo?.user?.email ? (
           <IonSplitPane contentId="main">
+            <Redirect to="/Front" from="/" />
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/Front" component={Front} />
@@ -60,7 +61,7 @@ const App: React.FC = () => {
         ) : (
           <>
             <Route path="/" component={Home} exact />
-            <Redirect to="/" exact />
+            <Redirect to="/" />
           </>
         )}
         <Route path="/SignUp">

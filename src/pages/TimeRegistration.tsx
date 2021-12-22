@@ -4,7 +4,6 @@ import {
   IonButtons,
   IonCard,
   IonContent,
-  IonDatetime,
   IonHeader,
   IonInput,
   IonLabel,
@@ -18,6 +17,7 @@ import {
 } from "@ionic/react";
 import axios from "axios";
 import { useAuth } from "../AuthContext";
+import "./TimeRegistration.css";
 import { useHistory } from "react-router";
 
 interface Activity {
@@ -38,27 +38,27 @@ const TimeRegistration: React.FC = () => {
 
   useEffect(() => {
     const getActivities = () => {
-      const config = {
-        headers: {
-          Accept: "*/*",
-          Authorization: "Bearer " + authInfo.user.token,
-        },
-      };
-      axios
-        .get(`http://localhost:5014/api/activities`, config)
-        .then((res) => {
-          setActivities(res.data);
-        })
-        .catch((error) => {
-          alert("Try reload!");
-        });
+      try {
+        const config = {
+          headers: {
+            Accept: "*/*",
+            Authorization: "Bearer " + authInfo.user.token,
+          },
+        };
+        axios
+          .get(`http://localhost:5014/api/activities`, config)
+          .then((res) => {
+            setActivities(res.data);
+          })
+          .catch((error) => {
+            alert("Try reload!");
+          });
+      } catch {
+        alert("Failed to fetch!");
+      }
     };
     getActivities();
   });
-
-  const goBack = () => {
-    history.goBack();
-  };
 
   const handleSelect = (e: any) => {
     setActivityId(e.target.value);
@@ -67,31 +67,34 @@ const TimeRegistration: React.FC = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    const config = {
-      headers: {
-        Accept: "*/*",
-        Authoraization: "Bearer " + authInfo.user.token,
-        "Content-Type": "multipart/form-data",
-      },
-    };
+    try {
+      const config = {
+        headers: {
+          Accept: "*/*",
+          Authoraization: "Bearer " + authInfo.user.token,
+          "Content-Type": "multipart/form-data",
+        },
+      };
 
-    let formData = new FormData();
-    formData.append("Started", startTime);
-    formData.append("Ended", endTime);
-    formData.append("ActivityId", activityId);
-    formData.append("UserId", userId);
+      let formData = new FormData();
+      formData.append("Started", startTime);
+      formData.append("Ended", endTime);
+      formData.append("Comment", comment);
+      formData.append("ActivityId", activityId);
+      formData.append("UserId", userId);
 
-    console.log(activityId);
-    console.log(userId);
-
-    axios
-      .post(`http://localhost:5014/api/timeregcreate`, formData, config)
-      .then((res) => {
-        alert("Successful create!");
-      })
-      .catch((error) => {
-        alert("Fail create!");
-      });
+      axios
+        .post(`http://localhost:5014/api/timeregcreate`, formData, config)
+        .then((res) => {
+          alert("Successful create!");
+          history.push("/Front")
+        })
+        .catch((error) => {
+          alert("Fail create!");
+        });
+    } catch {
+      alert("Fail!");
+    }
   };
 
   return (
@@ -145,14 +148,6 @@ const TimeRegistration: React.FC = () => {
           onClick={handleSubmit}
         >
           Submit
-        </IonButton>
-        <IonButton
-          expand="block"
-          fill="solid"
-          style={{ margin: "10px" }}
-          onClick={goBack}
-        >
-          Back
         </IonButton>
       </IonContent>
     </IonPage>
